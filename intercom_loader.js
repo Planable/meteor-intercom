@@ -1,4 +1,8 @@
 Meteor.startup(function() {
+  if (Meteor.settings.public.intercom.enabled !== true) {
+    return
+  }
+
   // If the app id is set, we should use the new url for the widget otherwise
   // fall back to the old url but apparantly in-app messaging will no longer
   // work
@@ -14,7 +18,7 @@ Meteor.startup(function() {
   // ------ The snippet below is almost identical to the official one however
   // ------ we substitute in widgetUrl instead of a statically defined one.
   // ------ In addition, it has been found that the window.onload event is unreliable
-  // ------ in some browsers (specifically on mobile), where it may never fire.  
+  // ------ in some browsers (specifically on mobile), where it may never fire.
   // ------ We have replaced waiting on window.onload with simply executing the script loader.
   // ------ As we are inside of Meteor.startup, this should be ok.
 
@@ -24,7 +28,7 @@ Meteor.startup(function() {
     if (typeof ic==="function") {
       ic('reattach_activator');
       ic('update',intercomSettings);
-    } else { 
+    } else {
       var d=document;
       var i=function(){
         i.c(arguments)};
@@ -32,7 +36,7 @@ Meteor.startup(function() {
         i.c=function(args) {
           i.q.push(args)
       };
-      w.Intercom=i; 
+      w.Intercom=i;
       function l() {
         var s=d.createElement('script');
         s.type='text/javascript';
